@@ -1,37 +1,14 @@
-## Welcome to GitHub Pages
+## Welcome to Ayouto project's github repository.
 
-You can use the [editor on GitHub](https://github.com/gunduzhuseyn/Ayouto/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Ayouto is an online platform for selling and purchasing cars. The platform is for both automobile manufacturers to open up their products to larger auidinece, as well as for common people to sell their second-hand cars.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Ayouto is currently being developed as a course project for CS 413 Software Engineering Project Management. The project team consists of 4 CS Students:
 
-### Markdown
+- Ferhat Serday Atalay
+- Imran Hajiyev
+- Gunduz Huseynli (Project Manager)
+- Metehan Kesekler
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+The project is sponsored by the course instructor, Haluk Altunel.
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gunduzhuseyn/Ayouto/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+To be informed about the project's progress please refer to our [blog](https://gunduzhuseyn.github.io/Ayouto/)

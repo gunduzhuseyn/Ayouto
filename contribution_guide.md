@@ -3,7 +3,7 @@
 
 * Clone the repository into your local machine
     ```
-    git clone https://github.com/gunduzhuseyn/Tic-SPLE.git
+    git clone https://github.com/gunduzhuseyn/Ayouto.git
     ```
 * Before you begin to implement a new feature, make sure you are at the dev branch and it is up to date. 
     ```
