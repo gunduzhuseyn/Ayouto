@@ -1,21 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-class RegisterView(TemplateView):
+from .forms import UserRegistrationForm
+from django.views.generic.edit import FormView
+
+
+class CustomerRegistrationView(FormView):
     template_name = "users/register.html"
+    form_class = UserRegistrationForm
+    success_url = '/users/user_register'
 
+    def form_valid(self, form):
+        form.save()
 
-class ManRegisterView(RegisterView):
+        return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user_type'] = 'manufacturer dude'
-        return context
-
-
-class UserRegisterView(RegisterView):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user_type'] = 'normal dude'
-        return context
