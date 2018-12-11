@@ -2,10 +2,8 @@
 
 {% block content %}
 	<div class="container-fluid ">
-			<h4 style="    display: flex;
-			justify-content: center;">{{form_title}}</h4>
+			<h4 style="display: flex; justify-content: center;">{{form_title}}</h4>
     <div class="row justify-content-center" style="margin-top: 15px;">
-
 		<p>{% if form_description %} {{ form_description }} {% endif %}</p>
 		<form method = 'POST' enctype="multipart/form-data">
 			{% csrf_token %}

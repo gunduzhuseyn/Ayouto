@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+	{% if not request.user.is_authenticated %}
+		<div id="backg">
+			{% include "core/formsnippet.html" with form_title="Login" submit_button_name="Login" %}
+		</div>
+	{% else %}
+		<div style="display: flex; justify-items: center;">
+		    <h5>You are already logged in!</h5>
+		</div>
+	{% endif %}
+{% endblock %}

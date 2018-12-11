@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
+from django.contrib.auth.views import (LoginView)
 
 from django.shortcuts import render
 
@@ -10,6 +11,7 @@ from .forms import UserRegistrationForm, ManufacturerRegistrationForm
 from .models import ManufacturerModel
 
 
+# Registration Views For Customers and Manufacturers
 class CustomerRegistrationView(FormView):
     template_name = "users/register.html"
     form_class = UserRegistrationForm
@@ -54,3 +56,8 @@ class ManufacturerRegistrationView(FormView):
         login(self.request, user)
 
         return super().form_valid(form)
+
+
+# Login View for all users
+class UserLoginView(LoginView):
+    template_name = 'users/login.html'
