@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
-from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
+from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView,
+                                       PasswordResetView, PasswordResetDoneView,
+                                       PasswordResetConfirmView, PasswordResetCompleteView,
+                                       )
 
 from django.shortcuts import render
 
@@ -58,16 +61,17 @@ class ManufacturerRegistrationView(FormView):
         return super().form_valid(form)
 
 
-# Login View for all users
+# Login View for all users: modified default Django View
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
 
 
-# Logout View for all users
+# Logout View for all users: modified default Django View
 class UserLogoutView(LogoutView):
     template_name = 'users/logout.html'
 
 
+# User Password Change Views: modified default Django Views
 class UserPasswordChangeView(PasswordChangeView):
     template_name = 'users/password_change.html'
 
@@ -75,3 +79,22 @@ class UserPasswordChangeView(PasswordChangeView):
 class UserPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
 
+
+# User Password Reset Views: modified default Django Views
+class UserPasswordResetView(PasswordResetView):
+    template_name = 'users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject.txt'
+    from_email = 'no_reply@ayouto.com'
+
+
+class UserPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'users/password_reset_done.html'
+
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'users/password_reset_confirm.html'
+
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'users/password_reset_complete.html'
