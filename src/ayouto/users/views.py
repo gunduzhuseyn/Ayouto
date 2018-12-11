@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
-from django.contrib.auth.views import (LoginView, LogoutView)
+from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView)
 
 from django.shortcuts import render
 
@@ -66,3 +66,12 @@ class UserLoginView(LoginView):
 # Logout View for all users
 class UserLogoutView(LogoutView):
     template_name = 'users/logout.html'
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = 'users/password_change.html'
+
+
+class UserPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'users/password_change_done.html'
+
