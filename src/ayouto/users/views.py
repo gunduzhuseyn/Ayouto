@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import Group
-from django.contrib.auth.views import (LoginView)
+from django.contrib.auth.views import (LoginView, LogoutView)
 
 from django.shortcuts import render
 
@@ -61,3 +61,8 @@ class ManufacturerRegistrationView(FormView):
 # Login View for all users
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
+
+
+# Logout View for all users
+class UserLogoutView(LogoutView):
+    template_name = 'users/logout.html'

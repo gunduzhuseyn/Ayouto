@@ -3,7 +3,7 @@
 {% block content %}
 	{% if not request.user.is_authenticated %}
 		<div id="backg">
-			{% include "core/formsnippet.html" with form_title="Login" submit_button_name="Login" %}
+			{% include "core/formsnippet_1.html" with form_title="Login" submit_button_name="Login" %}
 		</div>
 	{% else %}
 		<div style="display: flex; justify-items: center;">
