@@ -11,7 +11,32 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from .forms import UserRegistrationForm, ManufacturerRegistrationForm
-from .models import ManufacturerModel
+from .models import ManufacturerModel, ManufacturerVerificationCodeModel, CustomerModel
+
+
+# Verification View for the customers who want to sell second hand cars
+class SellerVerificationView(TemplateView):
+    template_name = 'users/seller_verification.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        message = ''
+        customer = CustomerModel.objects.all().get(user=self.request.user)      # assume customer exists
+        status = customer.seller_status
+
+        if customer.telephone_number is None:
+            message = 'You have to provide your phone number first. Please do so from your profile page.'
+        elif status == 0:
+            customer.seller_status = 1
+            customer.save()
+            message = 'Your request was successful. Our staff will reach you'
+        elif status == 1:
+            message = 'Your request has been taken into consideration already. Please wait for our staff to reach you'
+        elif status == 2:
+            message = 'Your account has been verified by our staff already.'
+
+        context['message'] = message
+        return context
 
 
 # Registration Views For Customers and Manufacturers
@@ -25,10 +50,15 @@ class CustomerRegistrationView(FormView):
 
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
+        telephone_number = form.cleaned_data.get('telephone_number')
 
         user = authenticate(username=username, password=raw_password)
         group = Group.objects.get(name='customer')
         group.user_set.add(user)
+
+        customer = CustomerModel.objects.create(user=user, seller_status=0, telephone_number=telephone_number)
+        customer.save()
+
         login(self.request, user)
 
         return super().form_valid(form)
@@ -40,6 +70,15 @@ class ManufacturerRegistrationView(FormView):
     success_url = '/users/man_register'
 
     def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        code = form.cleaned_data.get('verification_code')
+
+        verification_code = ManufacturerVerificationCodeModel.objects.all().filter(email=email)
+
+        if not verification_code or code != verification_code[0].verification_code:
+            # TODO: pass an error to the form
+            return super().form_valid(form)
+
         form.save()
 
         username = form.cleaned_data.get('username')

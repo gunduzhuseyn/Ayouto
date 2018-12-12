@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from .views import (CustomerRegistrationView, ManufacturerRegistrationView, UserLoginView,
                     UserLogoutView, UserPasswordChangeView, UserPasswordChangeDoneView,
                     UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView,
-                    UserPasswordResetCompleteView, )
+                    UserPasswordResetCompleteView, SellerVerificationView)
 
 urlpatterns = [
     path('man_register/', ManufacturerRegistrationView.as_view(), name='man_register'),
@@ -17,4 +17,5 @@ urlpatterns = [
     re_path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password/complete/', UserPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('verify_customer', SellerVerificationView.as_view(), name='verify_customer'),
 ]

@@ -7,6 +7,7 @@ from .models import ManufacturerModel
 
 
 class UserRegistrationForm(UserCreationForm):
+    telephone_no = forms.CharField(max_length=40, label='Phone Number', required=False)
 
     class Meta:
         model = User
@@ -14,6 +15,7 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class ManufacturerRegistrationForm(UserRegistrationForm):
+    verification_code = forms.CharField(max_length=100, label='Verification Code')
     company_name = forms.CharField(max_length=100, label='Company Name')
     company_address = forms.CharField(max_length=300, label='Company Address')
     company_number = forms.CharField(max_length=50, label='Company Telephone Number')
