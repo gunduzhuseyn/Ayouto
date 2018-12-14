@@ -73,12 +73,6 @@ class ManufacturerRegistrationView(FormView):
         email = form.cleaned_data.get('email')
         code = form.cleaned_data.get('verification_code')
 
-        verification_code = ManufacturerVerificationCodeModel.objects.all().filter(email=email)
-
-        if not verification_code or code != verification_code[0].verification_code:
-            # TODO: pass an error to the form
-            return super().form_valid(form)
-
         form.save()
 
         username = form.cleaned_data.get('username')
