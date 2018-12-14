@@ -1,0 +1,31 @@
+<!-- Passing context in form_title, form_description, and submit_button_name -->
+
+{% block content %}
+	<div class="container-fluid ">
+			<h4 style="display: flex; justify-content: center;">{{form_title}}</h4>
+    <div class="row justify-content-center" style="margin-top: 15px;">
+		<p>{% if form_description %} {{ form_description }} {% endif %}</p>
+		<form method = 'POST' enctype="multipart/form-data">
+			{% csrf_token %}
+			{% if form.errors %}
+				<p>Something went wrong! Please try again!</p>
+			{% endif %}
+			{% for field in form %}
+				<div id="form" style="padding-top: 25px;">
+				<div class="row justify-content-start">
+				{{ field.label_tag }}
+				</div>
+
+				<div class="row justify-content-start">
+				{{ field }}
+				</div>
+				{% for error in field.errors %}
+					<p style="color: red">{{ error }}</p>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		<button type="submit" class="btn btn-info" style="margin-top: 15px;">{{submit_button_name}}</button>
+		</form>
+    </div>
+  </div>
+{% endblock %}

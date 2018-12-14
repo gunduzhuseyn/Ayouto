@@ -1,7 +1,5 @@
-{% extends "users/header.html" %}
+{% extends "core/base.html" %}
 
 {% block content %}
-    <h1>Wazzuppp?</h1>
-    <h3>Eyooo {{ user_type }}</h3>
-
+    {% include "core/formsnippet_1.html" with form_title="Register" submit_button_name="Sign Up" %}
 {% endblock %}

@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import ManufacturerModel, ManufacturerVerificationCodeModel, CustomerModel
+
+admin.site.register(ManufacturerModel)
+admin.site.register(ManufacturerVerificationCodeModel)
+admin.site.register(CustomerModel)
