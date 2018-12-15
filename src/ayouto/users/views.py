@@ -7,13 +7,17 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView
 
 from django.shortcuts import render
 
+from django.urls import reverse_lazy
+
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from .forms import UserRegistrationForm, ManufacturerRegistrationForm
-from .models import ManufacturerModel, ManufacturerVerificationCodeModel, CustomerModel
+from .forms import (UserRegistrationForm, ManufacturerRegistrationForm,
+                    CustomerProfileUpdateForm,)
+from .models import (ManufacturerModel, CustomerModel,)
 
 
+# TODO: seller verification
 # Verification View for the customers who want to sell second hand cars
 class SellerVerificationView(TemplateView):
     template_name = 'users/seller_verification.html'
@@ -70,9 +74,6 @@ class ManufacturerRegistrationView(FormView):
     success_url = '/users/man_register'
 
     def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        code = form.cleaned_data.get('verification_code')
-
         form.save()
 
         username = form.cleaned_data.get('username')
@@ -90,6 +91,50 @@ class ManufacturerRegistrationView(FormView):
         manufacturer.save()
 
         login(self.request, user)
+
+        return super().form_valid(form)
+
+
+# TODO: customer/seller verification
+class CustomerProfileView(TemplateView):
+    template_name = 'users/customer_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = CustomerModel.objects.all().get(user=self.request.user)
+
+        context['customer'] = customer
+
+        return context
+
+
+# TODO: customer/seller verification
+class CustomerProfileUpdateView(FormView):
+    template_name = "users/customer_profile_update.html"
+    form_class = CustomerProfileUpdateForm
+    success_url = reverse_lazy('user_profile')
+
+    def get_customer(self):
+        customer = CustomerModel.objects.get(user=self.request.user)
+
+        return customer
+
+    def get_initial(self):
+        initial = super(CustomerProfileUpdateView, self).get_initial()
+        initial['first_name'] = self.request.user.first_name
+        initial['last_name'] = self.request.user.last_name
+        initial['telephone_number'] = self.get_customer().telephone_number
+
+        return initial
+
+    def form_valid(self, form):
+        # TODO: push the saving functionality to form.save()
+        customer = self.get_customer()
+        customer.user.first_name = form.cleaned_data.get('first_name')
+        customer.user.last_name = form.cleaned_data.get('last_name')
+        customer.telephone_number = form.cleaned_data.get('telephone_number')
+        customer.user.save()
+        customer.save()
 
         return super().form_valid(form)
 
@@ -131,3 +176,4 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'users/password_reset_complete.html'
+
