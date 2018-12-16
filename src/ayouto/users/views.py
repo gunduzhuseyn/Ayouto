@@ -13,8 +13,8 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from .forms import (UserRegistrationForm, ManufacturerRegistrationForm,
-                    CustomerProfileUpdateForm,)
-from .models import (ManufacturerModel, CustomerModel,)
+                    CustomerProfileUpdateForm, PaymentForm,)
+from .models import (ManufacturerModel, CustomerModel, UserBankAccount)
 
 
 # TODO: seller verification
@@ -60,6 +60,9 @@ class CustomerRegistrationView(FormView):
         group = Group.objects.get(name='customer')
         group.user_set.add(user)
 
+        user_account = UserBankAccount.objects.create(user=user, balance=0)
+        user_account.save()
+
         customer = CustomerModel.objects.create(user=user, seller_status=0, telephone_number=telephone_number)
         customer.save()
 
@@ -85,6 +88,9 @@ class ManufacturerRegistrationView(FormView):
         user = authenticate(username=username, password=raw_password)
         group = Group.objects.get(name='manufacturer')
         group.user_set.add(user)
+
+        user_account = UserBankAccount.objects.create(user=user, balance=0)
+        user_account.save()
 
         manufacturer = ManufacturerModel.objects.create(representative=user, company_name=company_name,
                                                         company_address=company_address, company_number=company_number)
@@ -135,6 +141,29 @@ class CustomerProfileUpdateView(FormView):
         customer.telephone_number = form.cleaned_data.get('telephone_number')
         customer.user.save()
         customer.save()
+
+        return super().form_valid(form)
+
+
+class UserBankAccountView(TemplateView):
+    template_name = 'users/bank_account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['account'] = UserBankAccount.objects.get(user=self.request.user)
+
+        return context
+
+
+class UserBankAccountUpdateView(FormView):
+    template_name = 'users/bank_account_update.html'
+    form_class = PaymentForm
+    success_url = reverse_lazy('user_bank_account')
+
+    def form_valid(self, form):
+        account = UserBankAccount.objects.get(user=self.request.user)
+        account.balance += form.cleaned_data.get('amount')
+        account.save()
 
         return super().form_valid(form)
 

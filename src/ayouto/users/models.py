@@ -30,3 +30,12 @@ class ManufacturerModel(models.Model):
 
     def __str__(self):
         return self.company_name
+
+
+class UserBankAccount(models.Model):
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    balance = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+
