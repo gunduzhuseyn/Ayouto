@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+	<div style="    align-items: center;
+					display: flex;
+					flex-direction: column;
+					margin-top: 20px;">
+		<h2>Account Info</h2>
+		<h6>The amount in your account is {{ account.balance }} TL</h6>
+		<a class="btn btn-info" href="{% url 'user_bank_account_update' %}">Increase Balance</a>
+	</div>
+{% endblock %}
