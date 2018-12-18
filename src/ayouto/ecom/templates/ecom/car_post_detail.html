@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <p>Owner: {{ car_post.post_owner }}</p>
+    <p>Sold: {{ car_post.is_sold }}</p>
+    <p>Car Model: {{ car_post.car_brand }}</p>
+    <p>Year: {{ car_post.car_year }}</p>
+{% endblock %}
