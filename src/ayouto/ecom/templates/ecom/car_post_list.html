@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div style="align-items: center; display:  flex; flex-direction:  column; padding-top: 30px;">
+        <h2>Posts: </h2>
+        {% for post in car_post_list %}
+            <p><a class="btn btn-info" href="/post/{{post.id}}">{{ post.post_name }}</a></p>
+        {% endfor %}
+    </div>
+{% endblock %}
