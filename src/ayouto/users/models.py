@@ -23,7 +23,8 @@ class CustomerModel(models.Model):
 
 
 class ManufacturerModel(models.Model):
-    representative = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    telephone_number = models.CharField(default='', max_length=50, blank=True, null=True)
     company_name = models.CharField(default='', max_length=100)
     company_address = models.CharField(default='', max_length=300)
     company_number = models.CharField(default='', max_length=50)

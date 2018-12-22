@@ -17,16 +17,6 @@ class UserRegistrationForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 
-class CustomerProfileUpdateForm(forms.ModelForm):
-    # TODO: use the whole UserRegistrationForm, with disabled fields
-    first_name = forms.CharField(max_length=50, label='First Name', required=False)
-    last_name = forms.CharField(max_length=50, label='Last Name', required=False)
-
-    class Meta:
-        model = CustomerModel
-        fields = ('first_name', 'last_name', 'telephone_number')
-
-
 class ManufacturerRegistrationForm(UserRegistrationForm):
     verification_code = forms.CharField(max_length=100, label='Verification Code')
     company_name = forms.CharField(max_length=100, label='Company Name')
@@ -44,6 +34,23 @@ class ManufacturerRegistrationForm(UserRegistrationForm):
             if not vc or code != vc[0].verification_code:
                 message = "Your email or verification code does not match our records!"
                 self.add_error('verification_code', message)
+
+
+class CustomerProfileUpdateForm(UserRegistrationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerProfileUpdateForm, self).__init__(*args, **kwargs)
+        self.fields.pop('password1')
+        self.fields.pop('password2')
+        self.fields.pop('username')
+        self.fields.pop('email')
+
+
+class ManufacturerProfileUpdateForm(CustomerProfileUpdateForm, ManufacturerRegistrationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ManufacturerProfileUpdateForm, self).__init__(*args, **kwargs)
+        self.fields.pop('verification_code')
 
 
 class PaymentForm(forms.Form):
