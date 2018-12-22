@@ -158,8 +158,10 @@ class UserProfileUpdateView(FormView):
         model_user = get_model_user_object(self.request.user)
         model_user.user.first_name = form.cleaned_data.get('first_name')
         model_user.user.last_name = form.cleaned_data.get('last_name')
-        model_user.telephone_number = form.cleaned_data.get('telephone_no')
         model_user.user.save()
+
+        model_user.telephone_number = form.cleaned_data.get('telephone_no')
+        model_user.profile_image = form.cleaned_data.get('profile_image')
 
         if is_user_manufacturer(self.request.user):
             model_user.company_name = form.cleaned_data.get('company_name')

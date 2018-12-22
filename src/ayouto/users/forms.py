@@ -11,6 +11,7 @@ from .models import ManufacturerVerificationCodeModel, CustomerModel
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=50, label='Email')
     telephone_no = forms.CharField(max_length=40, label='Phone Number', required=False)
+    profile_image = forms.ImageField(label='Profile Image', required=False)
 
     class Meta:
         model = User
