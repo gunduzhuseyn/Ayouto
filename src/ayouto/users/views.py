@@ -10,11 +10,22 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 
 from .forms import (UserRegistrationForm, ManufacturerRegistrationForm,
-                    CustomerProfileUpdateForm, PaymentForm,)
+                    CustomerProfileUpdateForm, ManufacturerProfileUpdateForm, PaymentForm,)
 from .models import (ManufacturerModel, CustomerModel, UserBankAccount)
+
+
+def is_user_manufacturer(user):
+    return user.groups.all()[0].name == 'manufacturer'
+
+
+def get_model_user_object(user):
+    if is_user_manufacturer(user):
+        return ManufacturerModel.objects.get(user=user)
+    else:
+        return CustomerModel.objects.get(user=user)
 
 
 # TODO: seller verification
@@ -81,6 +92,7 @@ class ManufacturerRegistrationView(FormView):
 
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
+        telephone_number = form.cleaned_data.get('telephone_number')
         company_name = form.cleaned_data.get('company_name')
         company_address = form.cleaned_data.get('company_address')
         company_number = form.cleaned_data.get('company_number')
@@ -92,7 +104,8 @@ class ManufacturerRegistrationView(FormView):
         user_account = UserBankAccount.objects.create(user=user, balance=0)
         user_account.save()
 
-        manufacturer = ManufacturerModel.objects.create(representative=user, company_name=company_name,
+        manufacturer = ManufacturerModel.objects.create(user=user, company_name=company_name,
+                                                        telephone_number=telephone_number,
                                                         company_address=company_address, company_number=company_number)
         manufacturer.save()
 
@@ -101,46 +114,61 @@ class ManufacturerRegistrationView(FormView):
         return super().form_valid(form)
 
 
-# TODO: customer/seller verification
-class CustomerProfileView(TemplateView):
-    template_name = 'users/customer_profile.html'
+# TODO: authenticate users
+class UserProfileView(TemplateView):
+    template_name = 'users/user_profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        customer = CustomerModel.objects.all().get(user=self.request.user)
 
-        context['customer'] = customer
+        context['profile_owner'] = get_model_user_object(self.request.user)
+        context['user'] = self.request.user
+        context['is_manufacturer'] = is_user_manufacturer(self.request.user)
 
         return context
 
 
-# TODO: customer/seller verification
-class CustomerProfileUpdateView(FormView):
-    template_name = "users/customer_profile_update.html"
-    form_class = CustomerProfileUpdateForm
+class UserProfileUpdateView(FormView):
+    template_name = 'users/user_profile_update.html'
+    form_class = ManufacturerProfileUpdateForm
     success_url = reverse_lazy('user_profile')
 
-    def get_customer(self):
-        customer = CustomerModel.objects.get(user=self.request.user)
-
-        return customer
+    def get_form_class(self):
+        if is_user_manufacturer(self.request.user):
+            return ManufacturerProfileUpdateForm
+        else:
+            return CustomerProfileUpdateForm
 
     def get_initial(self):
-        initial = super(CustomerProfileUpdateView, self).get_initial()
+        initial = super(UserProfileUpdateView, self).get_initial()
         initial['first_name'] = self.request.user.first_name
         initial['last_name'] = self.request.user.last_name
-        initial['telephone_number'] = self.get_customer().telephone_number
+
+        model_user = get_model_user_object(self.request.user)
+        initial['telephone_no'] = model_user.telephone_number
+
+        if is_user_manufacturer(self.request.user):
+            initial['company_name'] = model_user.company_name
+            initial['company_address'] = model_user.company_address
+            initial['company_number'] = model_user.company_number
 
         return initial
 
     def form_valid(self, form):
-        # TODO: push the saving functionality to form.save()
-        customer = self.get_customer()
-        customer.user.first_name = form.cleaned_data.get('first_name')
-        customer.user.last_name = form.cleaned_data.get('last_name')
-        customer.telephone_number = form.cleaned_data.get('telephone_number')
-        customer.user.save()
-        customer.save()
+        model_user = get_model_user_object(self.request.user)
+        model_user.user.first_name = form.cleaned_data.get('first_name')
+        model_user.user.last_name = form.cleaned_data.get('last_name')
+        model_user.user.save()
+
+        model_user.telephone_number = form.cleaned_data.get('telephone_no')
+        model_user.profile_image = form.cleaned_data.get('profile_image')
+
+        if is_user_manufacturer(self.request.user):
+            model_user.company_name = form.cleaned_data.get('company_name')
+            model_user.company_address = form.cleaned_data.get('company_address')
+            model_user.company_number = form.cleaned_data.get('company_number')
+
+        model_user.save()
 
         return super().form_valid(form)
 

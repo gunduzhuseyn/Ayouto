@@ -5,11 +5,15 @@
                                                 flex-direction: column;
                                                 align-items: center;
                                                 padding-top: 100px;" >
-		<h6>Username: {{ customer.user.username }}</h6>
-		<h6>Email: {{ customer.user.email }}</h6>
-		<h6>First Name: {{ customer.user.first_name }}</h6>
-		<h6>Last Name: {{ customer.user.last_name }}</h6>
-        <h6>Telephone Number: {{ customer.telephone_number }}</h6>
+		<h6>Username: {{ user.username }}</h6>
+		<h6>Email: {{ user.email }}</h6>
+		<h6>First Name: {{ user.first_name }}</h6>
+		<h6>Last Name: {{ user.last_name }}</h6>
+        <h6>Telephone Number: {{ profile_owner.telephone_number }}</h6>
+        {{ profile_owner.user.username }}
+        {% if is_manufacturer %}
+            <h6>Company Name: {{ profile_owner.company_name }}</h6>
+        {% endif %}
 {#		<h6>Bio: {{ profile.bio }}</h6>#}
 {#		{% if profile.profile_image %}#}
 {#			<img src="{{ profile.profile_image.url }}" width=150>#}
