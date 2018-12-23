@@ -30,6 +30,7 @@ class CustomerModel(models.Model):
 class ManufacturerModel(models.Model):
     user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     telephone_number = models.CharField(default='', max_length=50, blank=True, null=True)
+    profile_image = models.ImageField(upload_to=user_profile_image_dir, blank=True)
     company_name = models.CharField(default='', max_length=100)
     company_address = models.CharField(default='', max_length=300)
     company_number = models.CharField(default='', max_length=50)

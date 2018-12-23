@@ -5,6 +5,8 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordChangeView
                                        PasswordResetConfirmView, PasswordResetCompleteView,
                                        )
 
+from django.core.files.storage import FileSystemStorage
+
 from django.shortcuts import render
 
 from django.urls import reverse_lazy
