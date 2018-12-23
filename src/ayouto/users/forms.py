@@ -10,19 +10,14 @@ from .models import ManufacturerVerificationCodeModel, CustomerModel
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=50, label='Email')
-    telephone_no = forms.CharField(max_length=40, label='Phone Number', required=False)
-    profile_image = forms.ImageField(label='Profile Image', required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
 
 
 class ManufacturerRegistrationForm(UserRegistrationForm):
     verification_code = forms.CharField(max_length=100, label='Verification Code')
-    company_name = forms.CharField(max_length=100, label='Company Name')
-    company_address = forms.CharField(max_length=300, label='Company Address')
-    company_number = forms.CharField(max_length=50, label='Company Telephone Number')
 
     def clean(self):
         cleaned_data = super().clean()
@@ -37,21 +32,17 @@ class ManufacturerRegistrationForm(UserRegistrationForm):
                 self.add_error('verification_code', message)
 
 
-class CustomerProfileUpdateForm(UserRegistrationForm):
-
-    def __init__(self, *args, **kwargs):
-        super(CustomerProfileUpdateForm, self).__init__(*args, **kwargs)
-        self.fields.pop('password1')
-        self.fields.pop('password2')
-        self.fields.pop('username')
-        self.fields.pop('email')
+class CustomerProfileUpdateForm(forms.Form):
+    first_name = forms.CharField(max_length=50, label='First Name', required=False)
+    last_name = forms.CharField(max_length=50, label='Last Name', required=False)
+    telephone_no = forms.CharField(max_length=40, label='Phone Number', required=False)
+    profile_image = forms.ImageField(label='Profile Image', required=False)
 
 
-class ManufacturerProfileUpdateForm(CustomerProfileUpdateForm, ManufacturerRegistrationForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ManufacturerProfileUpdateForm, self).__init__(*args, **kwargs)
-        self.fields.pop('verification_code')
+class ManufacturerProfileUpdateForm(CustomerProfileUpdateForm):
+    company_name = forms.CharField(max_length=100, label='Company Name')
+    company_address = forms.CharField(max_length=300, label='Company Address')
+    company_number = forms.CharField(max_length=50, label='Company Telephone Number')
 
 
 class PaymentForm(forms.Form):

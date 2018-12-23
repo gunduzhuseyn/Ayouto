@@ -4,9 +4,11 @@ from .views import (CustomerRegistrationView, ManufacturerRegistrationView, User
                     UserLogoutView, UserPasswordChangeView, UserPasswordChangeDoneView,
                     UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView,
                     UserPasswordResetCompleteView, SellerVerificationView,
-                    UserBankAccountView, UserBankAccountUpdateView, UserProfileView, UserProfileUpdateView)
+                    UserBankAccountView, UserBankAccountUpdateView, UserProfileView, UserProfileUpdateView,
+                    RegisterWelcomeView)
 
 urlpatterns = [
+    path('register/', RegisterWelcomeView.as_view(), name='register_welcome'),
     path('man_register/', ManufacturerRegistrationView.as_view(), name='man_register'),
     path('user_register/', CustomerRegistrationView.as_view(), name='user_register'),
     path('login/', UserLoginView.as_view(), name='user_login'),
