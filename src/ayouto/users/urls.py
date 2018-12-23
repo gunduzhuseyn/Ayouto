@@ -4,8 +4,7 @@ from .views import (CustomerRegistrationView, ManufacturerRegistrationView, User
                     UserLogoutView, UserPasswordChangeView, UserPasswordChangeDoneView,
                     UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView,
                     UserPasswordResetCompleteView, SellerVerificationView,
-                    CustomerProfileView, CustomerProfileUpdateView, UserBankAccountView,
-                    UserBankAccountUpdateView,)
+                    UserBankAccountView, UserBankAccountUpdateView, UserProfileView, UserProfileUpdateView)
 
 urlpatterns = [
     path('man_register/', ManufacturerRegistrationView.as_view(), name='man_register'),
@@ -20,8 +19,8 @@ urlpatterns = [
             UserPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password_reset/complete/', UserPasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('customer_verify/', SellerVerificationView.as_view(), name='customer_verify'),
-    path('user_profile/', CustomerProfileView.as_view(), name='user_profile'),
-    path('user_profile/edit/', CustomerProfileUpdateView.as_view(), name='user_profile_edit'),
+    path('user_profile/', UserProfileView.as_view(), name='user_profile'),
+    path('user_profile/edit/', UserProfileUpdateView.as_view(), name='user_profile_edit'),
     path('user_bank_account/', UserBankAccountView.as_view(), name='user_bank_account'),
-    path('user_bank_account/update/', UserBankAccountUpdateView.as_view(), name='user_bank_account_update')
+    path('user_bank_account/update/', UserBankAccountUpdateView.as_view(), name='user_bank_account_update'),
 ]
