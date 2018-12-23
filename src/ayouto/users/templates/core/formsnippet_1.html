@@ -1,31 +1,71 @@
 <!-- Passing context in form_title, form_description, and submit_button_name -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ayouto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="{% static 'users/css/form.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400" rel="stylesheet">
+</head>
+<body>
 
-{% block content %}
-	<div class="container-fluid ">
-			<h4 style="display: flex; justify-content: center;">{{form_title}}</h4>
-    <div class="row justify-content-center" style="margin-top: 15px;">
-		<p>{% if form_description %} {{ form_description }} {% endif %}</p>
-		<form method = 'POST' enctype="multipart/form-data">
-			{% csrf_token %}
-			{% if form.errors %}
-				<p>Something went wrong! Please try again!</p>
-			{% endif %}
-			{% for field in form %}
-				<div id="form" style="padding-top: 25px;">
-				<div class="row justify-content-start">
-				{{ field.label_tag }}
-				</div>
+    {% block content %}
 
-				<div class="row justify-content-start">
-				{{ field }}
-				</div>
-				{% for error in field.errors %}
-					<p style="color: red">{{ error }}</p>
-				{% endfor %}
-				</div>
-			{% endfor %}
-		<button type="submit" class="btn btn-info" style="margin-top: 15px;">{{submit_button_name}}</button>
-		</form>
-    </div>
-  </div>
-{% endblock %}
+        <div class="container">
+            <h2>{{form_title}}</h2>
+
+            <p style="padding-top: 10px">{{advice_todo}}</p>
+
+            <div class="select2-selection__arrow">
+                <p>{% if form_description %} {{ form_description }} {% endif %}</p>
+
+                <form method = 'POST' enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <p>Something went wrong! Please try again!</p>
+                    {% endif %}
+                    {% for field in form %}
+
+                        <div id="form">
+                            <div class="row justify-content-center">
+                                {{ field.label_tag }}
+                            </div>
+                            <div class="row justify-content-center">
+                                {{ field }}
+                            </div>
+                            {% for error in field.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                    {% endfor %}
+
+                    <p style="padding-top: 20px"> {{ by_click }} <a href="#" style="color:dodgerblue;">{{ terms_privacy }}</a></p>
+
+                    <button type="submit" class="btn-info">{{submit_button_name}}</button>
+
+                    <div class="container signin">
+                        <p>{{ haveAccount }}<a href={{ link }}>{{ signIN }}</a></p>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    {% endblock %}
+
+</body>
+</html>
