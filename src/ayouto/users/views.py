@@ -30,6 +30,10 @@ def get_model_user_object(user):
         return CustomerModel.objects.get(user=user)
 
 
+class RegisterWelcomeView(TemplateView):
+    template_name = 'users/register_welcome.html'
+
+
 # TODO: seller verification
 # Verification View for the customers who want to sell second hand cars
 class SellerVerificationView(TemplateView):
@@ -60,14 +64,13 @@ class SellerVerificationView(TemplateView):
 class CustomerRegistrationView(FormView):
     template_name = "users/register.html"
     form_class = UserRegistrationForm
-    success_url = '/users/user_register'
+    success_url = reverse_lazy('user_profile')
 
     def form_valid(self, form):
         form.save()
 
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
-        telephone_number = form.cleaned_data.get('telephone_number')
 
         user = authenticate(username=username, password=raw_password)
         group = Group.objects.get(name='customer')
@@ -76,7 +79,7 @@ class CustomerRegistrationView(FormView):
         user_account = UserBankAccount.objects.create(user=user, balance=0)
         user_account.save()
 
-        customer = CustomerModel.objects.create(user=user, seller_status=0, telephone_number=telephone_number)
+        customer = CustomerModel.objects.create(user=user, seller_status=0)
         customer.save()
 
         login(self.request, user)
@@ -87,17 +90,13 @@ class CustomerRegistrationView(FormView):
 class ManufacturerRegistrationView(FormView):
     template_name = "users/register.html"
     form_class = ManufacturerRegistrationForm
-    success_url = '/users/man_register'
+    success_url = reverse_lazy('user_profile')
 
     def form_valid(self, form):
         form.save()
 
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
-        telephone_number = form.cleaned_data.get('telephone_number')
-        company_name = form.cleaned_data.get('company_name')
-        company_address = form.cleaned_data.get('company_address')
-        company_number = form.cleaned_data.get('company_number')
 
         user = authenticate(username=username, password=raw_password)
         group = Group.objects.get(name='manufacturer')
@@ -106,9 +105,7 @@ class ManufacturerRegistrationView(FormView):
         user_account = UserBankAccount.objects.create(user=user, balance=0)
         user_account.save()
 
-        manufacturer = ManufacturerModel.objects.create(user=user, company_name=company_name,
-                                                        telephone_number=telephone_number,
-                                                        company_address=company_address, company_number=company_number)
+        manufacturer = ManufacturerModel.objects.create(user=user)
         manufacturer.save()
 
         login(self.request, user)
