@@ -6,4 +6,13 @@
     <p>Car Model: {{ car_post.car_brand }}</p>
     <p>Year: {{ car_post.car_year }}</p>
     <p>Mileage: {{ car_post.car_mileage }}</p>
+
+    <h1>Images</h1>
+    {% for image in car_post.imagemodel_set.all %}
+        <img src="{{ image.image.url }}" width=250>
+    {% endfor %}
+
+    <a href="{% url 'car_post_update' pk=car_post.id %}">Update</a>
+
+
 {% endblock %}

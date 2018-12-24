@@ -3,6 +3,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+def car_post_image_path(instance, filename):
+    return 'car_posts/{0}/{1}'.format(instance.car_post.id, filename)
+
+
 class CarPostModel(models.Model):
     post_owner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_sold = models.BooleanField(default=False)
@@ -28,4 +32,12 @@ class CarPostModel(models.Model):
 
     def __str__(self):
         return self.post_name
+
+
+class ImageModel(models.Model):
+    car_post = models.ForeignKey(CarPostModel, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=car_post_image_path, blank=True)
+
+    def __str__(self):
+        return 'image'
 
