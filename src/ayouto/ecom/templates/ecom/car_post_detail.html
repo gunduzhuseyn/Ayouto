@@ -1,9 +1,40 @@
-{% extends 'core/base.html' %}
+{% extends 'ecom/car_post_list.html' %}
+{% load static %}
 
 {% block content %}
-    <p>Owner: {{ car_post.post_owner }}</p>
-    <p>Sold: {{ car_post.is_sold }}</p>
-    <p>Car Model: {{ car_post.car_brand }}</p>
-    <p>Year: {{ car_post.car_year }}</p>
-    <p>Mileage: {{ car_post.car_mileage }}</p>
+
+    <div>
+        <table class="myTableNoHover" cellpadding="30">
+            <tr>
+                <th>Car</th>
+                <td><img src="{% static 'users/imgs/bmw1.png' %}" width="150" height="90" ></td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td>{{ car_post.car_brand }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ car_post.post_description }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                 <td>{{ car_post.car_year }}</td>
+            </tr>
+            <tr>
+                <th>Mileage</th>
+                <td>{{ car_post.car_mileage }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ car_post.car_price }}</td>
+            </tr>
+            <tr>
+                <th>Seller</th>
+                <td><a style="display: flex; justify-content: center;" href="/users/user_profile/">{{ car_post.post_owner }}</a></td>
+            </tr>
+        </table>
+    </div>
+
+
 {% endblock %}
