@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    Hey there, choose the type of user you want to register :)
+    <a href="{% url 'user_register' %}">Normal Dude</a>
+    <a href="{% url 'man_register' %}">Manufacturer Dude</a>
+{% endblock %}

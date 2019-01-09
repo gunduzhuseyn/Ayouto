@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <div class="card border-dark mb-3" style="  display: flex;
+                                                flex-direction: column;
+                                                align-items: center;
+                                                padding-top: 100px;" >
+		<h6>Username: {{ user.username }}</h6>
+		<h6>Email: {{ user.email }}</h6>
+		<h6>First Name: {{ user.first_name }}</h6>
+		<h6>Last Name: {{ user.last_name }}</h6>
+        <h6>Telephone Number: {{ profile_owner.telephone_number }}</h6>
+        {{ profile_owner.user.username }}
+        {% if is_manufacturer %}
+            <h6>Company Name: {{ profile_owner.company_name }}</h6>
+        {% endif %}
+{#		<h6>Bio: {{ profile.bio }}</h6>#}
+{#		{% if profile.profile_image %}#}
+{#			<img src="{{ profile.profile_image.url }}" width=150>#}
+{#		{% else %}#}
+{#			{% load static %}#}
+{#			<img src='{% static "imgs/profile_default.png" %}' width=150>#}
+{#		{% endif %}#}
+
+		<a class="btn btn-info" style="margin-top: 10px;" href="{% url 'user_profile_edit' %}">Edit Profile</a>
+	</div>
+
+{% endblock %}
