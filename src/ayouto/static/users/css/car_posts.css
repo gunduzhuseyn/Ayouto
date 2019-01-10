@@ -1,0 +1,171 @@
+body{
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+.select2-container--default{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.filter_container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #4CAF50;
+}
+
+.logo{
+    float: left;
+    padding: 10px 0;
+}
+
+header{
+    background: #f1c232;
+}
+
+header::after{
+    content: '';
+    display: table;
+    clear: both;
+}
+
+nav{
+    float: right;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li{
+    display: inline-block;
+    margin-left: 35px;
+    padding-top: 23px;
+    position: relative;
+}
+
+nav a{
+    color: #444444;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+nav a:hover{
+    color: #000000;
+    text-decoration: none;
+}
+
+nav a::before{
+    content: '';
+    display: block;
+    height: 5px;
+    width: 0;
+    background-color: #444444;
+    position: absolute;
+    top: 0;
+    transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before{
+    width: 100%;
+}
+
+.selector{
+    display: block;
+    margin : 0 auto;
+    border: none;
+}
+
+input[type=text] {
+    display: block;
+    margin : 0 auto;
+    padding: 10px;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus {
+    background-color: #dddddd;
+    outline: none;
+}
+
+.searchButton{
+    background-color: #5b80b2;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    text-decoration: none;
+}
+
+a{
+    display: flex;
+    justify-content: right;
+}
+
+.searchButton:hover{
+    background-color: #5b80b2;
+    opacity:1;
+}
+
+.myDiv {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.myTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: lightblue;
+}
+
+.myTable td, .myTable th {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+
+.myTable tr:hover {
+    background-color: #ddd;
+}
+
+.myTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background: #4CAF50;
+    color: white;
+}
+
+.myTableNoHover {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: lightblue;
+}
+
+.myTableNoHover td, .myTableNoHover th {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+.myTableNoHover th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background: #4CAF50;
+    color: white;
+}
+

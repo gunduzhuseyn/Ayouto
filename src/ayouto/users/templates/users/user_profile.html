@@ -1,28 +1,39 @@
-{% extends "core/base.html" %}
+{% extends 'ecom/car_post_list.html' %}
+{% load static %}
 
 {% block content %}
-    <div class="card border-dark mb-3" style="  display: flex;
-                                                flex-direction: column;
-                                                align-items: center;
-                                                padding-top: 100px;" >
-		<h6>Username: {{ user.username }}</h6>
-		<h6>Email: {{ user.email }}</h6>
-		<h6>First Name: {{ user.first_name }}</h6>
-		<h6>Last Name: {{ user.last_name }}</h6>
-        <h6>Telephone Number: {{ profile_owner.telephone_number }}</h6>
-        {{ profile_owner.user.username }}
-        {% if is_manufacturer %}
-            <h6>Company Name: {{ profile_owner.company_name }}</h6>
-        {% endif %}
-{#		<h6>Bio: {{ profile.bio }}</h6>#}
-{#		{% if profile.profile_image %}#}
-{#			<img src="{{ profile.profile_image.url }}" width=150>#}
-{#		{% else %}#}
-{#			{% load static %}#}
-{#			<img src='{% static "imgs/profile_default.png" %}' width=150>#}
-{#		{% endif %}#}
 
-		<a class="btn btn-info" style="margin-top: 10px;" href="{% url 'user_profile_edit' %}">Edit Profile</a>
-	</div>
+    <table cellpadding="30" class="myTableNoHover">
+        <tr>
+            <td>
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" width=150>
+                {% else %}
+                    <img src="{% static 'users/imgs/icon.png' %}" width="120" height="120" >
+                {% endif %}
+            </td>
+            <td>
+                <p><img src="{% static 'users/imgs/miniProfile.png' %}" width="20" height="20" > Username: {{ user.username }}</p>
+                <p><img src="{% static 'users/imgs/phone.png' %}" width="20" height="20" > Telephone Number: {{ profile_owner.telephone_number }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>First Name: {{ user.first_name }}</p>
+                <p>Last Name: {{ user.last_name }}</p>
+                {% if is_manufacturer %}
+                    <p>Company Name: {{ profile_owner.company_name }}</p>
+                {% endif %}
+                <p>Bio: {{ profile.bio }}</p>
+                <a class="btn btn-info" style="margin-top: 10px;" href="{% url 'user_profile_edit' %}">Edit Profile</a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="bg-img">
+        <div class="myContainer">
+            <div class="topnav">
+                <a style="display: flex; justify-content: center;" href="/users/user_profile/carsforsale">Cars For Sale</a>
+                <a style="display: flex; justify-content: center;" href="/users/user_profile/comments">Comments</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block content %}
 	{% if not request.user.is_authenticated %}
@@ -6,8 +7,7 @@
 			{% include "core/formsnippet_1.html" with form_title="Login" submit_button_name="Login" haveAccount="Do not have an account? " signIN="Sign Up" link="/users/user_register" %}
 		</div>
 	{% else %}
-		<div style="display: flex; justify-items: center;">
-		    <h5>You are already logged in, {{ request.user.username }} !</h5>
-		</div>
+        <h4 style="text-align: center; margin: 10%">You are already logged in, {{ request.user.username }} !</h4>
 	{% endif %}
 {% endblock %}
+

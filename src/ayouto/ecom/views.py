@@ -4,9 +4,9 @@ from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from .models import (CarPostModel,)
+from .models import (CarPostModel, )
 
-from .forms import (CarPostForm,)
+from .forms import (CarPostForm, )
 
 
 class CarPostCreateView(FormView):
@@ -38,6 +38,13 @@ class CarPostListView(ListView):
     def get_queryset(self):
         return CarPostModel.objects.filter(is_sold=False).order_by('-post_time')
 
+
+class CarSearchView(ListView):
+    model = CarPostModel
+    paginate_by = 25
+    template_name = 'ecom/car_search.html'
+    context_object_name = 'car_search_list'
+    ordering = ['-post_time']
 
 
 

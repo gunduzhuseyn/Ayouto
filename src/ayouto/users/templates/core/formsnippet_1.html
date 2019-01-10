@@ -1,7 +1,7 @@
 <!-- Passing context in form_title, form_description, and submit_button_name -->
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:h="http://www.w3.org/1999/html">
 <head>
     <title>Ayouto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -23,6 +23,7 @@
     {% block content %}
 
         <div class="container">
+
             <h2>{{form_title}}</h2>
 
             <p style="padding-top: 10px">{{advice_todo}}</p>

@@ -1,3 +1,4 @@
+{% extends 'ecom/car_post_list.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -31,6 +32,7 @@
                         <li><a href="/home">Home</a></li>
                         <li><a href="#">Cars For Sale</a></li>
                         <li><a href="/post_create">Sell Your Car</a></li>
+                        <li><a href="#">Service</a></li>
                         <li><a href="/users/login">Sign In</a> </li>
                         <li><a href="/users/user_register">Sign Up</a></li>
                         <li><a href="/users/user_profile">My Profile</a></li>
@@ -41,7 +43,7 @@
 
 {% block content %}
 
-    <div class="select2-container--default">
+    <div class="select2-container--classic">
 
      <p>
 
@@ -66,25 +68,64 @@
 
     </div>
 
+        <div class="myDiv">
+            <table class="myTable" cellpadding="30">
+
+                <tr>
+                    <th>Car</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Description</th>
+                    <th>Km</th>
+                    <th>Price</th>
+                </tr>
+
+
+                <tr>
+                    <td><a href="/post/1/"><img src="{% static 'users/imgs/bmw1.png' %}" width="150" height="90" ></a></td>
+                    <td>Model</td>
+                    <td>2019</td>
+                    <td>NEW</td>
+                    <td>0</td>
+                    <td>200.000 TL</td>
+                </tr>
+
+                <tr>
+                    <td><a href="/post/2/"><img src="{% static 'users/imgs/bmw2.png' %}" width="150" height="90"></a></td>
+                    <td>Model</td>
+                    <td>2018</td>
+
+                    <td >
+                        <p>REMAINDER OF FACTORY WARRANTY NAVIGATION/GPS REAR</p>
+                        <p>BACKUP CAMERA BLUETOOTH HANDS FREE CELL PHONE</p>
+                        <p>HEATED LEATHER SEATS POWER MOONROOF/SUNROOF POWER</p>
+                        <p>LIFTGATE PUSH BUTTON START SPORT LINE BLIND SPOT</p>
+                        <p>MONITOR POWER AND MEMORY SEATING DRIVER ASSISTANCE</p>
+                    </td>
+
+                    <td>46.000</td>
+                    <td>185.000 TL</td>
+                </tr>
+
+                <tr>
+                    <td><a href="/post/3/"><img src="{% static 'users/imgs/bmw3.png' %}" width="150" height="90"></a></td>
+                    <td>Model</td>
+                    <td>2017</td>
+
+                    <td>
+                        <p>NO DESCRIPTION AVAILABLE.</p>
+                    </td>
+
+                    <td>74.000</td>
+                    <td>155.000 TL</td>
+                </tr>
+
+            </table>
+
+        </div>
+
     </div>
 
-    <div style="align-items: center; display:  flex; flex-direction: column; padding-top: 30px">
-    <h2>Available Automobiles: </h2>
-    </div>
-    <div style="align-items: center; display:  flex; flex-direction:  row; padding-top: 30px; margin: 10px">
-        {% for post in car_post_list %}
-
-            <div class="card">
-                <img src="{% static 'users/imgs/bmw2.png' %}" alt="Avatar" style="align-self: center;" width="150" height="90">
-                <div class="card_container">
-                    <h5><b>{{ post.post_name}}</b></h5>
-                    <p>Status: {{ post.post_description }}</p>
-                    <p>Date:  {{ post.post_time }} </p>
-                    <p><a style="text-decoration: none;display: flex; justify-content: center;color: #ffffff" class="searchButton" href="/post/{{post.id}}">Go to</a></p>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
 {% endblock %}
 
 </body>
